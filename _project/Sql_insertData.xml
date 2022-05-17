@@ -1,0 +1,55 @@
+﻿<Sql TableName="insertData" CustomScript="#CDATA">
+    <CDATA name="CustomScript"><![CDATA[INSERT INTO [dbo].[AABatchNodeDB]
+           ([parentNode]
+           ,[nodeId]
+           ,[NodeName])
+     VALUES
+           (0
+           ,1
+           ,'root')
+GO
+
+
+INSERT INTO [dbo].[AABatchNodeDB]
+           ([parentNode]
+           ,[nodeId]
+           ,[NodeName])
+     VALUES
+           (1
+           ,2
+           ,'ChildLevel1')
+GO
+
+
+INSERT INTO [dbo].[AABatchNodeDB]
+           ([parentNode]
+           ,[nodeId]
+           ,[NodeName])
+     VALUES
+           (1
+           ,3
+           ,'ChildLevel1AlsoLeaf')
+GO
+
+
+INSERT INTO [dbo].[AABatchNodeDB]
+           ([parentNode]
+           ,[nodeId]
+           ,[NodeName])
+     VALUES
+           (2
+           ,4
+           ,'ChildLevel2')
+GO
+
+
+INSERT INTO [dbo].[AABatchNodeDB]
+           ([parentNode]
+           ,[nodeId]
+           ,[NodeName])
+     VALUES
+           (2
+           ,5
+           ,'ChildLevel2vq')
+GO]]></CDATA>
+</Sql>

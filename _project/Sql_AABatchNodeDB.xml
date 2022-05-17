@@ -1,0 +1,7 @@
+﻿<Sql TableName="AABatchNodeDB" TableSchemaXml="#CDATA">
+    <CDATA name="TableSchemaXml"><![CDATA[<table name="AABatchNodeDB">
+  <col name="parentNode" type="Int" />
+  <col name="nodeId" type="Int" />
+  <col name="NodeName" type="VarChar(50)" nullable="true" />
+</table>]]></CDATA>
+</Sql>

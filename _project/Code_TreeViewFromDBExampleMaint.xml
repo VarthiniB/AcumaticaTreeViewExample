@@ -1,0 +1,103 @@
+﻿<Graph ClassName="TreeViewFromDBExampleMaint" Source="#CDATA" IsNew="True" FileType="NewGraph">
+    <CDATA name="Source"><![CDATA[using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using PX.SM;
+using PX.Data;
+using PX.Objects.GL;
+using PX.Web.UI;
+using static PX.Data.BQL.BqlPlaceholder;
+using PX.Data.BQL;
+namespace TreeViewFromDB
+{
+	public class TreeViewFromDBExampleMaint1 : PXGraph<TreeViewFromDBExampleMaint1>
+	{
+        public PXCancel<AABatchTreeInqFilter1> Cancel;
+
+        public PXFilter<AABatchTreeInqFilter1> Filter;
+        public PXSelect<AABatchNodeDB> Nodes;
+
+        public class constantA : PX.Data.Constant<int>
+        {
+            public constantA() : base(1) { }
+        }
+        public class constantB : PX.Data.Constant<int>
+        {
+            public constantB() : base(2) { }
+        }
+        public class constantC : PX.Data.Constant<int>
+        {
+            public constantC() : base(3) { }
+        }
+
+        protected virtual IEnumerable nodes([PXInt] int? parentID)
+        {
+              
+            if (parentID == null)
+            {
+                AABatchNodeDB nodeID1 = PXSelect<AABatchNodeDB, Where<AABatchNodeDB.nodeId, Equal<constantA>>>.Select(this);
+                yield return nodeID1;
+            }
+
+            if (parentID == 1)
+            {
+
+                foreach (AABatchNodeDB row in PXSelect<AABatchNodeDB, Where<AABatchNodeDB.parentNode, Equal<constantA>>>.SelectWindowed(this, 0, 2, 1))
+                {
+                   yield return row;
+                }
+               
+            }
+
+            if (parentID == 2)
+            {
+                foreach (AABatchNodeDB row in PXSelect<AABatchNodeDB, Where<AABatchNodeDB.parentNode, Equal<constantB>>>.SelectWindowed(this, 0, 2, 1))
+                {
+                    yield return row;
+                }
+            }
+
+            yield break;
+        }
+
+        }
+      
+
+    public class AABatchTreeInqFilter1 : IBqlTable
+    {
+
+        #region Description
+        [PXString(50, IsUnicode = true, InputMask = "")]
+        [PXUIField(DisplayName = "desc")]
+        public virtual string Desc { get; set; }
+        public abstract class desc : PX.Data.BQL.BqlString.Field<desc> { }
+        #endregion
+    }
+
+    [PXHidden]
+    public class AABatchNodeDB : IBqlTable
+    {
+
+        [PXDBInt()]
+        [PXUIField(DisplayName = "parentNode")]
+        public virtual int? ParentNode { get; set; }
+        public abstract class parentNode : PX.Data.BQL.BqlInt.Field<parentNode> { }
+
+
+        [PXDBInt(IsKey = true)]
+        [PXUIField(DisplayName = "nodeId")]
+        public virtual int? NodeId { get; set; }
+        public abstract class nodeId : PX.Data.BQL.BqlInt.Field<nodeId> { }
+
+
+        #region Description
+        [PXDBString(50, IsUnicode = true, InputMask = "")]
+        [PXUIField(DisplayName = "nodeName")]
+        public virtual string NodeName { get; set; }
+        public abstract class nodeName : PX.Data.BQL.BqlString.Field<nodeName> { }
+        #endregion
+
+    }
+}]]></CDATA>
+</Graph>

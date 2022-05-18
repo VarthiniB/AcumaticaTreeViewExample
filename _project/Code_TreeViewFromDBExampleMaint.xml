@@ -30,10 +30,14 @@ namespace TreeViewFromDB
         {
             public constantC() : base(3) { }
         }
+        public class constantD : PX.Data.Constant<int>
+        {
+            public constantD() : base(4) { }
+        }
 
         protected virtual IEnumerable nodes([PXInt] int? parentID)
         {
-              
+            
             if (parentID == null)
             {
                 AABatchNodeDB nodeID1 = PXSelect<AABatchNodeDB, Where<AABatchNodeDB.nodeId, Equal<constantA>>>.Select(this);
@@ -43,7 +47,7 @@ namespace TreeViewFromDB
             if (parentID == 1)
             {
 
-                foreach (AABatchNodeDB row in PXSelect<AABatchNodeDB, Where<AABatchNodeDB.parentNode, Equal<constantA>>>.SelectWindowed(this, 0, 2, 1))
+                foreach (AABatchNodeDB row in PXSelect<AABatchNodeDB, Where<AABatchNodeDB.parentNode, Equal<constantA>>>.SelectWindowed(this, 0, 2))
                 {
                    yield return row;
                 }
@@ -52,11 +56,12 @@ namespace TreeViewFromDB
 
             if (parentID == 2)
             {
-                foreach (AABatchNodeDB row in PXSelect<AABatchNodeDB, Where<AABatchNodeDB.parentNode, Equal<constantB>>>.SelectWindowed(this, 0, 2, 1))
+                foreach (AABatchNodeDB row in PXSelect<AABatchNodeDB, Where<AABatchNodeDB.parentNode, Equal<constantB>>>.SelectWindowed(this, 0, 2))
                 {
                     yield return row;
                 }
             }
+
 
             yield break;
         }

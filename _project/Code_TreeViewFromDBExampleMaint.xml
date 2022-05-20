@@ -18,57 +18,29 @@ namespace TreeViewFromDB
         public PXFilter<AABatchTreeInqFilter1> Filter;
         public PXSelect<AABatchNodeDB> Nodes;
 
-        public class constantA : PX.Data.Constant<int>
-        {
-            public constantA() : base(1) { }
-        }
-        public class constantB : PX.Data.Constant<int>
-        {
-            public constantB() : base(2) { }
-        }
-        public class constantC : PX.Data.Constant<int>
-        {
-            public constantC() : base(3) { }
-        }
-        public class constantD : PX.Data.Constant<int>
-        {
-            public constantD() : base(4) { }
-        }
-
         protected virtual IEnumerable nodes([PXInt] int? parentID)
         {
-            
-            if (parentID == null)
-            {
-                AABatchNodeDB nodeID1 = PXSelect<AABatchNodeDB, Where<AABatchNodeDB.nodeId, Equal<constantA>>>.Select(this);
-                yield return nodeID1;
-            }
 
-            if (parentID == 1)
+           if (parentID == null)
             {
-
-                foreach (AABatchNodeDB row in PXSelect<AABatchNodeDB, Where<AABatchNodeDB.parentNode, Equal<constantA>>>.SelectWindowed(this, 0, 2))
-                {
-                   yield return row;
-                }
-               
-            }
-
-            if (parentID == 2)
-            {
-                foreach (AABatchNodeDB row in PXSelect<AABatchNodeDB, Where<AABatchNodeDB.parentNode, Equal<constantB>>>.SelectWindowed(this, 0, 2))
+                foreach (AABatchNodeDB row in PXSelect<AABatchNodeDB,Where<AABatchNodeDB.parentNode, IsNull>>.Select(this))
                 {
                     yield return row;
                 }
             }
-
-
+            else
+            {
+                foreach (AABatchNodeDB row in PXSelect<AABatchNodeDB, Where<AABatchNodeDB.parentNode, Equal<Required<AABatchNodeDB.nodeId>>>>.Select(this, parentID))
+                {
+                    yield return row;
+                }
+            }
             yield break;
         }
 
         }
-      
 
+    [PXHidden]
     public class AABatchTreeInqFilter1 : IBqlTable
     {
 
